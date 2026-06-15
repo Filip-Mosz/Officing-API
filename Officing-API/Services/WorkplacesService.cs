@@ -46,9 +46,9 @@ public class WorkplacesService: IWorkspaceService
 
     public int Create(CreateWorkspaceDto dto,  int requestorId)
     {
-        if (!ClientsService.NotUser(requestorId))
+        if (!ClientsService.IsPriviledgedUser(requestorId))
         {
-            throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
+            throw new UnauthorizedAccessException("You do not have permission to create workspaces.");
         }
         //Business rule #1: Address duplicate prevention
         var exists = _workspaces.Any(w => w.City.ToLower().Equals(dto.City.ToLower())
