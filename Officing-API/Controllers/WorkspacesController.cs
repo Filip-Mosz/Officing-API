@@ -13,11 +13,11 @@ public class WorkspacesController : ControllerBase
     {
         new Workspace
         {
-            Id = 1, City = "Gdańsk", Street = "Grunwaldzka", StreetNumber = "1", Price = 120, IsAvailable = true, OwnerId = 1
+            Id = 1, City = "Gdańsk", Street = "Grunwaldzka", StreetNumber = "1", DailyRate = 120, IsAvailable = true, OwnerId = 1
         },
         new Workspace
         {
-            Id = 2, City = "Gdynia", Street = "Świętojańska", StreetNumber = "1B", Price = 420, IsAvailable = true, OwnerId = 1
+            Id = 2, City = "Gdynia", Street = "Świętojańska", StreetNumber = "1B", DailyRate = 420, IsAvailable = true, OwnerId = 1
         }
     };
 
@@ -31,7 +31,7 @@ public class WorkspacesController : ControllerBase
         {
             Id = workspace.Id,
             Address = $"{workspace.City} {workspace.PostalCode}, {workspace.Street} {workspace.StreetNumber}",
-            DailyRate = workspace.Price,
+            DailyRate = workspace.DailyRate,
             Deposit = workspace.Deposit
         };
         return Ok(dto);
@@ -45,7 +45,7 @@ public class WorkspacesController : ControllerBase
         {
             Id = w.Id,
             Address = $"{w.City} {w.PostalCode}, {w.Street} {w.StreetNumber}",
-            DailyRate =  w.Price
+            DailyRate =  w.DailyRate
         });
         return Ok(dtos);
     }
@@ -63,7 +63,7 @@ public class WorkspacesController : ControllerBase
             Street = dto.Street,
             StreetNumber = dto.StreetNumber,
             PostalCode = dto.PostalCode,
-            Price = dto.DailyRate,
+            DailyRate = dto.DailyRate,
             IsAvailable = true,
             OwnerId = 1 //as test same owner all the time
         };
