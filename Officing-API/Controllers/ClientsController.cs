@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Officing_API.Models;
+using Officing_API.Services;
 using Officing_API.DTOs;
 
 namespace Officing_API.Controllers;
@@ -9,72 +9,47 @@ namespace Officing_API.Controllers;
 
 public class ClientsController : ControllerBase
 {
-    
-    private static List<Client> _clients = new List<Client>
+
+    private readonly IClientService _clientsService;
+    public ClientsController(IClientService clientsService)
     {
-        new Client
-        {
-            Id = 0, Login = "ToveJ",  Role = RoleEnum.Admin,
-        },
-        new Client
-        {
-            Id = 1, Login = "Snusmumriken", Role =  RoleEnum.User
-        },
-        new Client
-        {
-            Id = 2, Login = "PikkuMyy", Role =  RoleEnum.User
-        }
-    };
+        _clientsService = clientsService;
+    }
 
     //GET: api/client/{id}
     [HttpGet("{id}")]
     public ActionResult<ClientDto> GetById(int id)
     {
-        var client = _clients.FirstOrDefault(v => v.Id == id);
-        if (client == null) return NotFound("Nie znaleziono takiego klienta!");
-        var dto = new ClientDto
-        {
-            Id = client.Id,
-            Login = client.Login,
-            Role = client.Role
-        };
-        return Ok(dto);
+        return Ok(_clientsService.GetById(id));
     }
 
     //GET: api/clients
     [HttpGet]
     public ActionResult<IEnumerable<ClientDto>> GetAll()
     {
-        var dtos = _clients.Select(c => new ClientDto()
-        {
-            Id = c.Id,
-            Login = c.Login,
-            Role =  c.Role
-        });
-        return Ok(dtos);
+        return Ok(_clientsService.GetAll());
     }
 
     //POST: api.clients
     [HttpPost]
     public ActionResult Create(CreateClientDto dto)
     {
-        
-        if (!Enum.IsDefined(typeof(RoleEnum), dto.Role))
-        {
-            return BadRequest("Nieprawidłowa rola.");
-        }
-        
-        int newId = _clients.Any()? _clients.Max(v => v.Id)+1: 0;
-
-        var newClient = new Client
-        {
-            Id = newId,
-            Login = dto.Login,
-            Role = dto.Role
-        };
-        
-        _clients.Add(newClient);
+        int newId = _clientsService.Create(dto);
         return CreatedAtAction(nameof(GetById), new {id = newId}, dto);
+    }
+
+    [HttpPut("{id}")]
+    public ActionResult Update(int id, UpdateClientDto dto)
+    {
+        _clientsService.Update(id, dto);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public ActionResult Delete(int id)
+    {
+        _clientsService.Delete(id);
+        return NoContent();
     }
     
 }
