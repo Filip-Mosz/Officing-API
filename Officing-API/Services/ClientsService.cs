@@ -3,7 +3,7 @@ using Officing_API.Models;
 
 namespace Officing_API.Services;
 
-public class ClientsService
+public class ClientsService: IClientService
 {
     private static List<Client> _clients = new List<Client>
     {

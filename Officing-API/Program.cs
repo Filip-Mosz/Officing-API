@@ -5,6 +5,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<Officing_API.Services.IWorkspaceService, Officing_API.Services.WorkplacesService>();
+builder.Services.AddSingleton<Officing_API.Services.IClientService, Officing_API.Services.ClientsService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
