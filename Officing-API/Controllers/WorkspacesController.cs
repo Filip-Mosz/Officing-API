@@ -31,9 +31,9 @@ public class WorkspacesController : ControllerBase
 
     //POST: api.workspaces
     [HttpPost]
-    public ActionResult Create(CreateWorkspaceDto dto)
+    public ActionResult Create(CreateWorkspaceDto dto, int requestorId)
     {
-        int newId = _workspacesService.Create(dto);
+        int newId = _workspacesService.Create(dto , requestorId);
         return CreatedAtAction(nameof(GetById), new {id = newId}, dto);
     }
 
@@ -45,9 +45,9 @@ public class WorkspacesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    public ActionResult Delete(int id, [FromQuery] int requestorId)
     {
-        _workspacesService.Delete(id);
+        _workspacesService.Delete(id, requestorId);
         return NoContent();
     }
     

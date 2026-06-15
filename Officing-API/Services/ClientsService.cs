@@ -5,7 +5,7 @@ namespace Officing_API.Services;
 
 public class ClientsService: IClientService
 {
-    private static List<Client> _clients = new List<Client>
+    static List<Client> _clients = new List<Client>
     {
         new Client
         {
@@ -79,5 +79,19 @@ public class ClientsService: IClientService
         //     throw new KeyNotFoundException($"Only administrators are allowed to delete clients!");
         // }
         _clients.Remove(client);
+    }
+
+    public static bool IsAdmin(int id)
+    {
+        var requestor = _clients.FirstOrDefault(w => w.Id == id);
+        if (requestor == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
+        return requestor.Role == RoleEnum.Admin;
+    }
+    
+    public static bool NotUser(int id)
+    {
+        var requestor = _clients.FirstOrDefault(w => w.Id == id);
+        if (requestor == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
+        return requestor.Role != RoleEnum.User;
     }
 }

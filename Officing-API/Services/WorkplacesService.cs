@@ -44,8 +44,12 @@ public class WorkplacesService: IWorkspaceService
         };
     }
 
-    public int Create(CreateWorkspaceDto dto)
+    public int Create(CreateWorkspaceDto dto,  int requestorId)
     {
+        if (!ClientsService.NotUser(requestorId))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
+        }
         //Business rule #1: Address duplicate prevention
         var exists = _workspaces.Any(w => w.City.ToLower().Equals(dto.City.ToLower())
                                           && w.Street.ToLower().Equals(dto.Street.ToLower())
@@ -80,8 +84,12 @@ public class WorkplacesService: IWorkspaceService
         workspace.IsAvailable = dto.IsAvailable;
     }
     
-    public void Delete(int id)
+    public void Delete(int id, int requestorId)
     {
+        if (!ClientsService.IsAdmin(requestorId))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
+        }
         var workspace = _workspaces.FirstOrDefault(w => w.Id == id);
         if (workspace == null) throw new KeyNotFoundException($"Workspace with ID {id} not found");
         //Business rule #2: Can't  delete unavailable workspace
