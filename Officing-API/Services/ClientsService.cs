@@ -35,7 +35,7 @@ public class ClientsService: IClientService
     public ClientDto GetById(int id)
     {
         var client = _clients.FirstOrDefault(w => w.Id == id);
-        if (client == null) throw new KeyNotFoundException($"Client with ID ${id}  not found");
+        if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
         return new ClientDto
         {
             Id = client.Id,

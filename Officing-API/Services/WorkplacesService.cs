@@ -72,7 +72,7 @@ public class WorkplacesService: IWorkspaceService
     public void Update(int id, UpdateWorkspaceDto dto)
     {
         var workspace = _workspaces.FirstOrDefault(w => w.Id == id);
-        if (workspace == null) throw new KeyNotFoundException($"Workspace with ID ${id} not found");
+        if (workspace == null) throw new KeyNotFoundException($"Workspace with ID {id} not found");
         if (dto.DailyRate != null)
         {
             workspace.DailyRate = dto.DailyRate;
@@ -83,7 +83,7 @@ public class WorkplacesService: IWorkspaceService
     public void Delete(int id)
     {
         var workspace = _workspaces.FirstOrDefault(w => w.Id == id);
-        if (workspace == null) throw new KeyNotFoundException($"Workspace with ID ${id} not found");
+        if (workspace == null) throw new KeyNotFoundException($"Workspace with ID {id} not found");
         //Business rule #2: Can't  delete unavailable workspace
         if (!workspace.IsAvailable)
         {
