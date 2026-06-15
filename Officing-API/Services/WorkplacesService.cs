@@ -24,7 +24,8 @@ public class WorkplacesService: IWorkspaceService
                 Id = w.Id,
                 Address = $"{w.City} {w.PostalCode}, {w.Street} {w.StreetNumber}",
                 DailyRate = w.DailyRate,
-                Deposit = w.Deposit
+                Deposit = w.Deposit,
+                IsAvailable = w.IsAvailable
             }
         );
     }
@@ -38,7 +39,8 @@ public class WorkplacesService: IWorkspaceService
             Id = workspace.Id,
             Address = $"{workspace.City} {workspace.PostalCode}, {workspace.Street} {workspace.StreetNumber}",
             DailyRate = workspace.DailyRate,
-            Deposit = workspace.Deposit
+            Deposit = workspace.Deposit,
+            IsAvailable =  workspace.IsAvailable
         };
     }
 
@@ -71,7 +73,10 @@ public class WorkplacesService: IWorkspaceService
     {
         var workspace = _workspaces.FirstOrDefault(w => w.Id == id);
         if (workspace == null) throw new KeyNotFoundException($"Workspace with ID ${id} not found");
-        workspace.DailyRate = dto.DailyRate;
+        if (dto.DailyRate != null)
+        {
+            workspace.DailyRate = dto.DailyRate;
+        }
         workspace.IsAvailable = dto.IsAvailable;
     }
     
