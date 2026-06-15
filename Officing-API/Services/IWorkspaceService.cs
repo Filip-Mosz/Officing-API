@@ -6,7 +6,7 @@ public interface IWorkspaceService
 {
     IEnumerable<WorkspaceDto> GetAll();
     WorkspaceDto GetById(int id);
-    int Create(CreateWorkspaceDto dto);
+    int Create(CreateWorkspaceDto dto,  int requestorId);
     void Update(int id, UpdateWorkspaceDto dto);
-    void Delete(int id);
+    void Delete(int id, int requestorId);
 }

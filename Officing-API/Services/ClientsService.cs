@@ -5,7 +5,7 @@ namespace Officing_API.Services;
 
 public class ClientsService: IClientService
 {
-    private static List<Client> _clients = new List<Client>
+    static List<Client> _clients = new List<Client>
     {
         new Client
         {
@@ -44,8 +44,12 @@ public class ClientsService: IClientService
         };
     }
 
-    public int Create(CreateClientDto dto)
+    public int Create(CreateClientDto dto, int requestorId)
     {
+        if (!IsPriviledgedUser(requestorId))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to add clients.");
+        }
         //Business rule #1: Address duplicate prevention
         var exists = _clients.Any(c => c.Login.ToLower().Equals(dto.Login.ToLower())
         );
@@ -58,26 +62,47 @@ public class ClientsService: IClientService
             Login = dto.Login,
             Role = dto.Role
         };
+        if (!IsAdmin(requestorId) && newClient.Role == RoleEnum.Admin)
+        {
+            throw new UnauthorizedAccessException("You do not have permission to create admin accounts.");
+        }
         _clients.Add(newClient);
         return newId;
     }
 
-    public void Update(int id, UpdateClientDto dto)
+    public void Update(int id, UpdateClientDto dto,  int requestorId)
     {
+        if (!IsAdmin(requestorId))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
+        }
         var client = _clients.FirstOrDefault(w => w.Id == id);
         if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
         client.Role = dto.Role;
     }
     
-    public void Delete(int id)
+    public void Delete(int id, int requestorId)
     {
+        if (!IsAdmin(requestorId))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
+        }
         var client = _clients.FirstOrDefault(w => w.Id == id);
         if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
-        //todo Business rule #3: Can't delete clients if not Admin
-        // if (requestor.IsAvailable)
-        // {
-        //     throw new KeyNotFoundException($"Only administrators are allowed to delete clients!");
-        // }
         _clients.Remove(client);
+    }
+
+    public static bool IsAdmin(int id)
+    {
+        var requestor = _clients.FirstOrDefault(w => w.Id == id);
+        if (requestor == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
+        return requestor.Role == RoleEnum.Admin;
+    }
+    
+    public static bool IsPriviledgedUser(int id)
+    {
+        var requestor = _clients.FirstOrDefault(w => w.Id == id);
+        if (requestor == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
+        return requestor.Role != RoleEnum.User;
     }
 }
