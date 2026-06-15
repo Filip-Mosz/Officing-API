@@ -10,6 +10,8 @@ builder.Services.AddSingleton<Officing_API.Services.IClientService, Officing_API
 
 var app = builder.Build();
 
+app.UseMiddleware<Officing_API.Middleware.ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
