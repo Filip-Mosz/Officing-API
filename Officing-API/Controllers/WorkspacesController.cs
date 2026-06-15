@@ -31,7 +31,7 @@ public class WorkspacesController : ControllerBase
 
     //POST: api.workspaces
     [HttpPost]
-    public ActionResult Create(CreateWorkspaceDto dto, int requestorId)
+    public ActionResult Create(CreateWorkspaceDto dto, [FromQuery] int requestorId)
     {
         int newId = _workspacesService.Create(dto , requestorId);
         return CreatedAtAction(nameof(GetById), new {id = newId}, dto);

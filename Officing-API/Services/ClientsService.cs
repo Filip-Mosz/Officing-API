@@ -44,8 +44,12 @@ public class ClientsService: IClientService
         };
     }
 
-    public int Create(CreateClientDto dto)
+    public int Create(CreateClientDto dto, int requestorId)
     {
+        if (!NotUser(requestorId))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
+        }
         //Business rule #1: Address duplicate prevention
         var exists = _clients.Any(c => c.Login.ToLower().Equals(dto.Login.ToLower())
         );
@@ -62,15 +66,23 @@ public class ClientsService: IClientService
         return newId;
     }
 
-    public void Update(int id, UpdateClientDto dto)
+    public void Update(int id, UpdateClientDto dto,  int requestorId)
     {
+        if (!IsAdmin(requestorId))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
+        }
         var client = _clients.FirstOrDefault(w => w.Id == id);
         if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
         client.Role = dto.Role;
     }
     
-    public void Delete(int id)
+    public void Delete(int id, int requestorId)
     {
+        if (!IsAdmin(requestorId))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
+        }
         var client = _clients.FirstOrDefault(w => w.Id == id);
         if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
         //todo Business rule #3: Can't delete clients if not Admin

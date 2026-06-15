@@ -32,23 +32,23 @@ public class ClientsController : ControllerBase
 
     //POST: api.clients
     [HttpPost]
-    public ActionResult Create(CreateClientDto dto)
+    public ActionResult Create(CreateClientDto dto, [FromQuery] int requestorId)
     {
-        int newId = _clientsService.Create(dto);
+        int newId = _clientsService.Create(dto, requestorId);
         return CreatedAtAction(nameof(GetById), new {id = newId}, dto);
     }
 
     [HttpPut("{id}")]
-    public ActionResult Update(int id, UpdateClientDto dto)
+    public ActionResult Update(int id, UpdateClientDto dto, [FromQuery] int requestorId)
     {
-        _clientsService.Update(id, dto);
+        _clientsService.Update(id, dto, requestorId);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    public ActionResult Delete(int id, [FromQuery] int requestorId)
     {
-        _clientsService.Delete(id);
+        _clientsService.Delete(id, requestorId);
         return NoContent();
     }
     

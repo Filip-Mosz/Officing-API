@@ -6,7 +6,7 @@ public interface IClientService
 {
     IEnumerable<ClientDto> GetAll();
     ClientDto GetById(int id);
-    int Create(CreateClientDto dto);
-    void Update(int id, UpdateClientDto dto);
-    void Delete(int id);
+    int Create(CreateClientDto dto, int requestorId);
+    void Update(int id, UpdateClientDto dto, int requestorId);
+    void Delete(int id,  int requestorId);
 }
