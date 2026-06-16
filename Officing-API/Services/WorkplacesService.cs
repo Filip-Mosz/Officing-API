@@ -7,10 +7,12 @@ namespace Officing_API.Services;
 public class WorkplacesService : IWorkspaceService
 {
     private readonly AppDbContext _dbContext;
+    private readonly IClientService _clientService;
 
-    public WorkplacesService(AppDbContext dbContext)
+    public WorkplacesService(AppDbContext dbContext, IClientService clientService)
     {
         _dbContext = dbContext;
+        _clientService = clientService;
     }
 
     public IEnumerable<WorkspaceDto> GetAll()
@@ -46,7 +48,7 @@ public class WorkplacesService : IWorkspaceService
 
     public int Create(CreateWorkspaceDto dto, int requestorId)
     {
-        if (!ClientsService.IsPriviledgedUser(requestorId))
+        if (!_clientService.IsPriviledgedUser(requestorId))
         {
             throw new UnauthorizedAccessException("You do not have permission to create workspaces.");
         }
@@ -100,7 +102,7 @@ public class WorkplacesService : IWorkspaceService
 
     public void Delete(int id, int requestorId)
     {
-        if (!ClientsService.IsAdmin(requestorId))
+        if (!_clientService.IsAdmin(requestorId))
         {
             throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
         }

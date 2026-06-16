@@ -1,3 +1,4 @@
+using Officing_API.Data;
 using Officing_API.DTOs;
 using Officing_API.Models;
 
@@ -5,36 +6,43 @@ namespace Officing_API.Services;
 
 public class ClientsService: IClientService
 {
-    static List<Client> _clients = new List<Client>
+    //static List<Client> _clients = new List<Client>
+    //{
+    //    new Client
+    //    {
+    //        Id = 0, Login = "ToveJ",  Role = RoleEnum.Admin,
+    //    },
+    //    new Client
+    //    {
+    //        Id = 1, Login = "Snusmumriken", Role =  RoleEnum.User
+    //    },
+    //    new Client
+    //    {
+    //        Id = 2, Login = "PikkuMyy", Role =  RoleEnum.User
+    //    }
+    //};
+    private readonly AppDbContext _dbContext;
+
+    public ClientsService(AppDbContext dbContext)
     {
-        new Client
-        {
-            Id = 0, Login = "ToveJ",  Role = RoleEnum.Admin,
-        },
-        new Client
-        {
-            Id = 1, Login = "Snusmumriken", Role =  RoleEnum.User
-        },
-        new Client
-        {
-            Id = 2, Login = "PikkuMyy", Role =  RoleEnum.User
-        }
-    };
+        _dbContext = dbContext;
+    }
 
     public IEnumerable<ClientDto> GetAll()
     {
-        return _clients.Select(w => new ClientDto
+        return _dbContext.Clients
+            .Select(c => new ClientDto
             {
-                Id = w.Id,
-                Login = w.Login,
-                Role = w.Role
-            }
-        );
+                Id = c.Id,
+                Login = c.Login,
+                Role = c.Role
+            })
+            .ToList();
     }
 
     public ClientDto GetById(int id)
     {
-        var client = _clients.FirstOrDefault(w => w.Id == id);
+        var client = _dbContext.Clients.FirstOrDefault(w => w.Id == id);
         if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
         return new ClientDto
         {
@@ -51,14 +59,12 @@ public class ClientsService: IClientService
             throw new UnauthorizedAccessException("You do not have permission to add clients.");
         }
         //Business rule #1: Address duplicate prevention
-        var exists = _clients.Any(c => c.Login.ToLower().Equals(dto.Login.ToLower())
+        var exists = _dbContext.Clients.Any(c => c.Login.ToLower().Equals(dto.Login.ToLower())
         );
         if (exists) throw new ApplicationException($"Client with login: {dto.Login} already exists");
 
-        var newId = _clients.Any() ? _clients.Max(w => w.Id) + 1 : 1;
         var newClient = new Client
         {
-            Id = newId,
             Login = dto.Login,
             Role = dto.Role
         };
@@ -66,8 +72,9 @@ public class ClientsService: IClientService
         {
             throw new UnauthorizedAccessException("You do not have permission to create admin accounts.");
         }
-        _clients.Add(newClient);
-        return newId;
+        _dbContext.Clients.Add(newClient);
+        _dbContext.SaveChanges();
+        return newClient.Id;
     }
 
     public void Update(int id, UpdateClientDto dto,  int requestorId)
@@ -76,9 +83,10 @@ public class ClientsService: IClientService
         {
             throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
         }
-        var client = _clients.FirstOrDefault(w => w.Id == id);
+        var client = _dbContext.Clients.FirstOrDefault(w => w.Id == id);
         if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
         client.Role = dto.Role;
+        _dbContext.SaveChanges();
     }
     
     public void Delete(int id, int requestorId)
@@ -87,21 +95,22 @@ public class ClientsService: IClientService
         {
             throw new UnauthorizedAccessException("You do not have permission to delete this workspace.");
         }
-        var client = _clients.FirstOrDefault(w => w.Id == id);
+        var client = _dbContext.Clients.FirstOrDefault(w => w.Id == id);
         if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
-        _clients.Remove(client);
+        _dbContext.Clients.Remove(client);
+        _dbContext.SaveChanges();
     }
 
-    public static bool IsAdmin(int id)
+    public bool IsAdmin(int id)
     {
-        var requestor = _clients.FirstOrDefault(w => w.Id == id);
+        var requestor = _dbContext.Clients.FirstOrDefault(w => w.Id == id);
         if (requestor == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
         return requestor.Role == RoleEnum.Admin;
     }
     
-    public static bool IsPriviledgedUser(int id)
+    public bool IsPriviledgedUser(int id)
     {
-        var requestor = _clients.FirstOrDefault(w => w.Id == id);
+        var requestor = _dbContext.Clients.FirstOrDefault(w => w.Id == id);
         if (requestor == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
         return requestor.Role != RoleEnum.User;
     }

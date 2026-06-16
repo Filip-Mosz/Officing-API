@@ -9,4 +9,6 @@ public interface IClientService
     int Create(CreateClientDto dto, int requestorId);
     void Update(int id, UpdateClientDto dto, int requestorId);
     void Delete(int id,  int requestorId);
+    bool IsAdmin(int id);
+    bool IsPriviledgedUser(int id);
 }

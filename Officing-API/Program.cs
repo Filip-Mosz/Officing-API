@@ -30,4 +30,21 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// setting up admin user if not exists
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    if (!dbContext.Clients.Any())
+    {
+        dbContext.Clients.Add(new Officing_API.Models.Client
+        {
+            Login = "admin",
+            Role = Officing_API.Models.RoleEnum.Admin
+        });
+
+        dbContext.SaveChanges();
+    }
+}
+
 app.Run();
