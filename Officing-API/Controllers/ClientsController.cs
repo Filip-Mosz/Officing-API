@@ -16,21 +16,27 @@ public class ClientsController : ControllerBase
         _clientsService = clientsService;
     }
 
-    //GET: api/client/{id}
+    /// <summary>
+    /// Returns client by id.
+    /// </summary>
     [HttpGet("{id}")]
     public ActionResult<ClientDto> GetById(int id)
     {
         return Ok(_clientsService.GetById(id));
     }
 
-    //GET: api/clients
+    /// <summary>
+    /// Returns all clients.
+    /// </summary>
     [HttpGet]
     public ActionResult<IEnumerable<ClientDto>> GetAll()
     {
         return Ok(_clientsService.GetAll());
     }
 
-    //POST: api.clients
+    /// <summary>
+    /// Creates a new client.
+    /// </summary>
     [HttpPost]
     public ActionResult Create(CreateClientDto dto, [FromQuery] int requestorId)
     {
@@ -38,6 +44,9 @@ public class ClientsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new {id = newId}, dto);
     }
 
+    /// <summary>
+    /// Updates client role.
+    /// </summary>
     [HttpPut("{id}")]
     public ActionResult Update(int id, UpdateClientDto dto, [FromQuery] int requestorId)
     {
@@ -45,6 +54,9 @@ public class ClientsController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Deletes client.
+    /// </summary>
     [HttpDelete("{id}")]
     public ActionResult Delete(int id, [FromQuery] int requestorId)
     {

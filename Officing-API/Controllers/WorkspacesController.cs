@@ -15,14 +15,22 @@ public class WorkspacesController : ControllerBase
         _workspacesService = workspacesService;
     }
 
-    //GET: api/workspace/{id}
+    /// <summary>
+    /// Returns workspace by id.
+    /// </summary>
+    /// <param name="id">Workspace identifier.</param>
+    /// <returns>Workspace details.</returns>
     [HttpGet("{id}")]
     public ActionResult<WorkspaceDto> GetById(int id)
     {
         return Ok(_workspacesService.GetById(id));
     }
 
-    //GET: api/workspaces
+    /// <summary>
+    /// Returns paginated list of workspaces.
+    /// </summary>
+    /// <param name="query">Pagination parameters.</param>
+    /// <returns>List of workspaces.</returns>
     [HttpGet]
     public ActionResult<IEnumerable<WorkspaceDto>> GetAll([FromQuery] PaginationQuery query)
     {
@@ -30,7 +38,12 @@ public class WorkspacesController : ControllerBase
         return Ok(result);
     }
 
-    //POST: api.workspaces
+    /// <summary>
+    /// Creates a new workspace.
+    /// </summary>
+    /// <param name="dto">Workspace data.</param>
+    /// <param name="requestorId">User performing the operation.</param>
+    /// <returns>Created workspace id.</returns>
     [HttpPost]
     public ActionResult Create(CreateWorkspaceDto dto, [FromQuery] int requestorId)
     {
@@ -38,6 +51,11 @@ public class WorkspacesController : ControllerBase
         return CreatedAtAction(nameof(GetById), new {id = newId}, dto);
     }
 
+    /// <summary>
+    /// Updates workspace data.
+    /// </summary>
+    /// <param name="id">Workspace identifier.</param>
+    /// <param name="dto">Updated workspace data.</param>
     [HttpPut("{id}")]
     public ActionResult Update(int id, UpdateWorkspaceDto dto)
     {
@@ -45,6 +63,11 @@ public class WorkspacesController : ControllerBase
         return NoContent();//returns 204 - No Content
     }
 
+    /// <summary>
+    /// Soft deletes workspace.
+    /// </summary>
+    /// <param name="id">Workspace identifier.</param>
+    /// <param name="requestorId">User performing the operation.</param>
     [HttpDelete("{id}")]
     public ActionResult Delete(int id, [FromQuery] int requestorId)
     {
