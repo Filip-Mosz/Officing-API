@@ -1,6 +1,7 @@
 using Officing_API.Data;
 using Officing_API.DTOs;
 using Officing_API.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Officing_API.Services;
 
@@ -15,9 +16,11 @@ public class WorkplacesService : IWorkspaceService
         _clientService = clientService;
     }
 
-    public IEnumerable<WorkspaceDto> GetAll()
+    public IEnumerable<WorkspaceDto> GetAll(PaginationQuery query)
     {
         return _dbContext.Workspaces
+        .Skip((query.PageNumber - 1) * query.PageSize)
+        .Take(query.PageSize)
             .Select(w => new WorkspaceDto
             {
                 Id = w.Id,

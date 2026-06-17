@@ -24,9 +24,10 @@ public class WorkspacesController : ControllerBase
 
     //GET: api/workspaces
     [HttpGet]
-    public ActionResult<IEnumerable<WorkspaceDto>> GetAll()
+    public ActionResult<IEnumerable<WorkspaceDto>> GetAll([FromQuery] PaginationQuery query)
     {
-        return Ok(_workspacesService.GetAll());
+        var result = _workspacesService.GetAll(query);
+        return Ok(result);
     }
 
     //POST: api.workspaces
