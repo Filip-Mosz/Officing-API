@@ -19,8 +19,9 @@ public class WorkplacesService : IWorkspaceService
     public IEnumerable<WorkspaceDto> GetAll(PaginationQuery query)
     {
         return _dbContext.Workspaces
-        .Skip((query.PageNumber - 1) * query.PageSize)
-        .Take(query.PageSize)
+            .Where(w => !w.IsDeleted)
+            .Skip((query.PageNumber - 1) * query.PageSize)
+            .Take(query.PageSize)
             .Select(w => new WorkspaceDto
             {
                 Id = w.Id,
@@ -34,7 +35,7 @@ public class WorkplacesService : IWorkspaceService
 
     public WorkspaceDto GetById(int id)
     {
-        var workspace = _dbContext.Workspaces.FirstOrDefault(w => w.Id == id);
+        var workspace = _dbContext.Workspaces.FirstOrDefault(w => w.Id == id && !w.IsDeleted);
 
         if (workspace == null)
             throw new KeyNotFoundException($"Workspace with ID {id} not found");
@@ -120,7 +121,7 @@ public class WorkplacesService : IWorkspaceService
             throw new ApplicationException("Can't delete workspace in use!");
         }
 
-        _dbContext.Workspaces.Remove(workspace);
+        workspace.IsDeleted = true;
         _dbContext.SaveChanges();
     }
 }
