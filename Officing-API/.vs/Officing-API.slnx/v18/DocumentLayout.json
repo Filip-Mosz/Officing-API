@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|c:\\users\\filip\\source\\repos\\officing-api\\officing-api\\services\\workplacesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|solutionrelative:services\\workplacesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|c:\\users\\filip\\source\\repos\\officing-api\\officing-api\\mappings\\clientmappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|solutionrelative:mappings\\clientmappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|c:\\users\\filip\\source\\repos\\officing-api\\officing-api\\services\\clientsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -13,6 +13,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|c:\\users\\filip\\source\\repos\\officing-api\\officing-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|c:\\users\\filip\\source\\repos\\officing-api\\officing-api\\services\\workplacesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|solutionrelative:services\\workplacesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8817E613-6405-279A-E5FA-98F8F520EA42}|Officing-API.csproj|c:\\users\\filip\\source\\repos\\officing-api\\officing-api\\services\\iclientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,8 +46,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ClientMappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Mappings\\ClientMappingProfile.cs",
+              "RelativeDocumentMoniker": "Mappings\\ClientMappingProfile.cs",
+              "ToolTip": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Mappings\\ClientMappingProfile.cs",
+              "RelativeToolTip": "Mappings\\ClientMappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T17:02:59.992Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -52,14 +69,14 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAC8AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-16T19:59:33.748Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "IClientService.cs",
               "DocumentMoniker": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Services\\IClientService.cs",
               "RelativeDocumentMoniker": "Services\\IClientService.cs",
@@ -67,8 +84,7 @@
               "RelativeToolTip": "Services\\IClientService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-16T19:55:19.633Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-16T19:55:19.633Z"
             },
             {
               "$type": "Document",
@@ -78,14 +94,14 @@
               "RelativeDocumentMoniker": "Services\\ClientsService.cs",
               "ToolTip": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Services\\ClientsService.cs",
               "RelativeToolTip": "Services\\ClientsService.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBQAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-16T19:13:24.283Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "WorkplacesService.cs",
               "DocumentMoniker": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Services\\WorkplacesService.cs",
               "RelativeDocumentMoniker": "Services\\WorkplacesService.cs",
@@ -98,7 +114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "IWorkspaceService.cs",
               "DocumentMoniker": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Services\\IWorkspaceService.cs",
               "RelativeDocumentMoniker": "Services\\IWorkspaceService.cs",
@@ -110,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Workspace.cs",
               "DocumentMoniker": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Models\\Workspace.cs",
               "RelativeDocumentMoniker": "Models\\Workspace.cs",
@@ -122,7 +138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Owner.cs",
               "DocumentMoniker": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Models\\Owner.cs",
               "RelativeDocumentMoniker": "Models\\Owner.cs",
@@ -134,7 +150,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Client.cs",
               "DocumentMoniker": "C:\\Users\\filip\\source\\repos\\Officing-API\\Officing-API\\Models\\Client.cs",
               "RelativeDocumentMoniker": "Models\\Client.cs",

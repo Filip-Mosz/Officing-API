@@ -1,55 +1,32 @@
 using Officing_API.Data;
 using Officing_API.DTOs;
 using Officing_API.Models;
+using AutoMapper;
 
 namespace Officing_API.Services;
 
 public class ClientsService: IClientService
 {
-    //static List<Client> _clients = new List<Client>
-    //{
-    //    new Client
-    //    {
-    //        Id = 0, Login = "ToveJ",  Role = RoleEnum.Admin,
-    //    },
-    //    new Client
-    //    {
-    //        Id = 1, Login = "Snusmumriken", Role =  RoleEnum.User
-    //    },
-    //    new Client
-    //    {
-    //        Id = 2, Login = "PikkuMyy", Role =  RoleEnum.User
-    //    }
-    //};
     private readonly AppDbContext _dbContext;
+    private readonly IMapper _mapper;
 
-    public ClientsService(AppDbContext dbContext)
+    public ClientsService(AppDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
+        _mapper = mapper;
     }
 
     public IEnumerable<ClientDto> GetAll()
     {
-        return _dbContext.Clients
-            .Select(c => new ClientDto
-            {
-                Id = c.Id,
-                Login = c.Login,
-                Role = c.Role
-            })
-            .ToList();
+        var clients = _dbContext.Clients.ToList();
+        return _mapper.Map<List<ClientDto>>(clients);
     }
 
     public ClientDto GetById(int id)
     {
         var client = _dbContext.Clients.FirstOrDefault(w => w.Id == id);
         if (client == null) throw new KeyNotFoundException($"Client with ID ${id} not found");
-        return new ClientDto
-        {
-            Id = client.Id,
-            Login = client.Login,
-            Role = client.Role
-        };
+        return _mapper.Map<ClientDto>(client);
     }
 
     public int Create(CreateClientDto dto, int requestorId)
@@ -63,11 +40,7 @@ public class ClientsService: IClientService
         );
         if (exists) throw new ApplicationException($"Client with login: {dto.Login} already exists");
 
-        var newClient = new Client
-        {
-            Login = dto.Login,
-            Role = dto.Role
-        };
+        var newClient = _mapper.Map<Client>(dto);
         if (!IsAdmin(requestorId) && newClient.Role == RoleEnum.Admin)
         {
             throw new UnauthorizedAccessException("You do not have permission to create admin accounts.");
