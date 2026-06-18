@@ -4,7 +4,7 @@ namespace Officing_API.Services;
 
 public interface IWorkspaceService
 {
-    IEnumerable<WorkspaceDto> GetAll();
+    IEnumerable<WorkspaceDto> GetAll(PaginationQuery query);
     WorkspaceDto GetById(int id);
     int Create(CreateWorkspaceDto dto,  int requestorId);
     void Update(int id, UpdateWorkspaceDto dto);

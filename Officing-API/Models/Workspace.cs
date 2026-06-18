@@ -11,4 +11,5 @@ public class Workspace
     public decimal Deposit { get; set; }
     public bool IsAvailable { get; set; }
     public int OwnerId { get; set; }
+    public bool IsDeleted { get; set; } = false;
 }

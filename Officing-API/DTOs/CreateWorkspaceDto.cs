@@ -13,5 +13,5 @@ public class CreateWorkspaceDto
     public string PostalCode { get; set; } = string.Empty;
     [Range(1,10000, ErrorMessage = "Daily Rate have to be between 1 and 10000")]
     public decimal DailyRate { get; set; }
-    
+    public decimal? Deposit { get; set; }
 }
